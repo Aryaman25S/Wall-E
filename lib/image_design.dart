@@ -9,14 +9,15 @@ class ImageDesign extends StatelessWidget {
     return Container(
       child: Stack(
         children: <Widget>[
-          fl.FillLevel(),
+          fl.FillLevel(per),
           Center(
             child: Container(
-              child: Text('$per', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w500,fontSize: 30,height: 8),),
-              /*child: Container(
-                child: Text('76', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15,height: 1),),
-                margin: EdgeInsets.all(200),
-              ),*/
+              child: Text(
+                '$per',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontWeight: FontWeight.w500, fontSize: 30, height: 8),
+              ),
               height: 370.0,
               width: 370.0,
               decoration: BoxDecoration(
@@ -29,7 +30,6 @@ class ImageDesign extends StatelessWidget {
               margin: EdgeInsets.all(0.0),
             ),
           ),
-          //Stack(children: <Widget>[Text('76',)],)
         ],
       ),
     );

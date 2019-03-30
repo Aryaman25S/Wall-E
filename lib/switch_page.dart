@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 import './top.dart' as tp;
+
+final FirebaseDatabase database = FirebaseDatabase.instance;
 
 class SwitchPage extends StatefulWidget {
   @override
@@ -8,8 +11,9 @@ class SwitchPage extends StatefulWidget {
   }
 }
 
-class SwitchPageState extends State<SwitchPage>{
+class SwitchPageState extends State<SwitchPage> {
   bool isSwitched = true;
+  String toggle = 'on';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,11 +33,27 @@ class SwitchPageState extends State<SwitchPage>{
               ),
             ),
           ),
-          Switch(value: isSwitched,onChanged: (value){
-            setState(() {
-              isSwitched = value;
-            });
-          },activeTrackColor: Colors.orangeAccent, activeColor: Colors.orange,),
+          Switch(
+            value: isSwitched,
+            onChanged: (value) {
+              setState(() {
+                isSwitched = value;
+                if (value == true){
+                  toggle = 'on';
+                  value = false;
+                  //print('$toggle');
+                }
+                else{
+                  toggle = 'off';
+                  value = true;
+                  //print('$toggle');
+                }
+                database.reference().child("State").update({"f_ultra": "$toggle"});
+              });
+            },
+            activeTrackColor: Colors.orangeAccent,
+            activeColor: Colors.orange,
+          ),
           Container(
             child: Column(
               children: <Widget>[Center()],

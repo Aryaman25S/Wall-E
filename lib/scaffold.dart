@@ -18,33 +18,31 @@ class Scaff extends StatefulWidget {
 }
 
 class _Scaff extends State<Scaff> {
-  int value;
-  String state;
-  //bool change = true;
+  int percent = 0;
+  String state = 'open';
+  bool change = false;
 
-  void getdata(){
-    database.reference().child("State").once().then((DataSnapshot snapshot){
+  void getdata() {
+    database.reference().child("State").once().then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> data = snapshot.value;
-     value = data["percent_filled"];
-     print(value);
+      percent = data["percent_filled"];
+      print(percent);
     });
-    setState(() {
-    });
+    setState(() {});
   }
 
-  void _lid() {
-    print('lid');
-    /*
-    database.reference().child("State").set({
-      "status":"open"
+  void lid() {
+    database.reference().child("State").update({"status": "$state"});
+    print('$state');
+    setState(() {
+      if (change == true) {
+        state = "open";
+        change = false;
+      } else {
+        state = "close";
+        change = true;
+      }
     });
-          setState(() {
-            if(change == true)
-            state = "open";
-            change = false;
-            if(change == false)
-            change = true;
-          });*/
   }
 
   @override
@@ -65,13 +63,14 @@ class _Scaff extends State<Scaff> {
         children: <Widget>[
           Header(),
           //TextButton(),
-          ImageDesign(value),
+          ImageDesign(percent),
         ],
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
+            heroTag: 'btn1',
             onPressed: getdata,
             tooltip: 'Refreshes the page to tell latest report',
             child: Icon(Icons.refresh),
@@ -80,8 +79,9 @@ class _Scaff extends State<Scaff> {
             padding: EdgeInsets.all(5.0),
           ),
           FloatingActionButton(
-            child: Text('close'),
-            onPressed: _lid,
+            heroTag: 'btn2',
+            child: Text('$state'),
+            onPressed: lid,
             tooltip: 'Refreshes the page to tell latest report',
             //child: Icon(Icons.refresh),
           ),

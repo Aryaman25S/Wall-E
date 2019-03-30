@@ -53,7 +53,7 @@ class CurvePainter1 extends CustomPainter{
   }
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return null;
+    return true;
   }
 }
 
@@ -96,6 +96,6 @@ class CurvePainter2 extends CustomPainter{
   }
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return null;
+    return true;
   }
 }
