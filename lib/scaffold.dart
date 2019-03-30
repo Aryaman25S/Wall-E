@@ -23,12 +23,18 @@ class _Scaff extends State<Scaff> {
   bool change = false;
 
   void getdata() {
-    database.reference().child("State").once().then((DataSnapshot snapshot) {
+    /*database.reference().child("State").once().then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> data = snapshot.value;
       percent = data["percent_filled"];
       print(percent);
+    });*/
+    setState(() {
+      database.reference().child("State").once().then((DataSnapshot snapshot) {
+        Map<dynamic, dynamic> data = snapshot.value;
+        percent = data["percent_filled"];
+        print(percent);
+      });
     });
-    setState(() {});
   }
 
   void lid() {
