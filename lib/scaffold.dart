@@ -4,9 +4,6 @@ import 'package:firebase_database/firebase_database.dart';
 import './header.dart';
 //import './lid_button.dart';
 import './image_design.dart';
-//import 'dart:async';
-//import 'dart:convert';
-//import 'package:http/http.dart' as http;
 
 final FirebaseDatabase database = FirebaseDatabase.instance;
 
@@ -20,19 +17,44 @@ class Scaff extends StatefulWidget {
 class _Scaff extends State<Scaff> {
   int percent = 0;
   String state = 'open';
-  bool change = false;
+  String fultra;
+  bool ref;
 
   void getdata() {
-    /*database.reference().child("State").once().then((DataSnapshot snapshot) {
+    print('pop');
+    database.reference().child("State").once().then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> data = snapshot.value;
-      percent = data["percent_filled"];
-      print(percent);
-    });*/
-    setState(() {
-      database.reference().child("State").once().then((DataSnapshot snapshot) {
-        Map<dynamic, dynamic> data = snapshot.value;
-        percent = data["percent_filled"];
-        print(percent);
+
+      setState(() {
+
+        fultra = data["f_ultra"];
+
+        print(fultra);
+
+        if(fultra == "on"){
+          percent = data["percent_filled"];
+          print(percent);
+        }
+        else{
+          database.reference().child("State").update({"refresh": true});
+          ref = true;
+          print(ref);
+          while(ref==true){
+            setState(() {
+              database.reference().child("State").once().then((DataSnapshot snapshot) {
+              Map<dynamic, dynamic> data = snapshot.value;
+              ref = data["refresh"];
+              // setState(() {
+              //   ref = data["refresh"];
+              // });
+              print(ref);
+            });
+            });
+            Future.delayed(Duration(milliseconds: 100));
+          }
+          percent = data["percent_filled"];
+          print(percent);
+        }
       });
     });
   }
@@ -41,12 +63,10 @@ class _Scaff extends State<Scaff> {
     database.reference().child("State").update({"status": "$state"});
     print('$state');
     setState(() {
-      if (change == true) {
+      if (state == "close") {
         state = "open";
-        change = false;
       } else {
         state = "close";
-        change = true;
       }
     });
   }
@@ -89,7 +109,6 @@ class _Scaff extends State<Scaff> {
             child: Text('$state'),
             onPressed: lid,
             tooltip: 'Refreshes the page to tell latest report',
-            //child: Icon(Icons.refresh),
           ),
         ],
       ),

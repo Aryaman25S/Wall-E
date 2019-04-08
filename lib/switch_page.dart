@@ -38,17 +38,19 @@ class SwitchPageState extends State<SwitchPage> {
             onChanged: (value) {
               setState(() {
                 isSwitched = value;
-                if (value == true){
+                if (value == true) {
                   toggle = 'on';
                   value = false;
                   //print('$toggle');
-                }
-                else{
+                } else {
                   toggle = 'off';
                   value = true;
                   //print('$toggle');
                 }
-                database.reference().child("State").update({"f_ultra": "$toggle"});
+                database
+                    .reference()
+                    .child("State")
+                    .update({"f_ultra": "$toggle"});
               });
             },
             activeTrackColor: Colors.orangeAccent,

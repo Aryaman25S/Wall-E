@@ -37,7 +37,7 @@ class Indicator extends CustomPainter {
       paint.color = Colors.red;
       canvas.drawPath(path, paint);
     }
-    if (fill < 75 && fill > 50) {
+    if (fill < 75 && fill > 25) {
       paint.color = Colors.yellow;
       canvas.drawPath(path, paint);
     }
@@ -45,9 +45,6 @@ class Indicator extends CustomPainter {
       paint.color = Colors.green;
       canvas.drawPath(path, paint);
     }
-
-    // paint.color = Colors.green;
-    // canvas.drawPath(path, paint);
   }
 
   @override
